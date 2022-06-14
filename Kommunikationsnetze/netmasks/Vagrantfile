@@ -20,6 +20,7 @@ transmitter() {
   echo "Done."
   echo "We will now send UDP traffic to the target (open a second terminal, vagrant ssh into netmask2 and follow the instructions)"
   read -p "Press any key to continue once you are ready..."
+  TARGET=$(cat $(ls /vagrant/*.ip | grep -v $(cat /proc/sys/kernel/hostname)) | awk -F'[/=]' '{print $1}')
   echo "This is a connection test" | nc -u $TARGET 5204
 }
 receiver() {
@@ -58,6 +59,8 @@ else
   echo "Netmask is not valid, please try again"
   continue
 fi 
+sudo ip a del $(ip a s eth1 | awk '/inet / {print $2}' | sed 's/addr://') dev eth1
+sudo ip a change dev eth1 $ADDRESS/$NETMASK
 echo "$(ip a s eth1 | awk '/inet / {print $2}' | sed 's/addr://')" > /vagrant/$(cat /proc/sys/kernel/hostname).ip
 if [ $(cat /proc/sys/kernel/hostname | grep 1) ]
 then

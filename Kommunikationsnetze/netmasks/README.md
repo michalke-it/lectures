@@ -13,3 +13,6 @@ You should learn that there might be different outcomes when the IP address conf
 
 ## Tools
 In this experiment, we use 'ping' and 'iperf3' to send traffic between the hosts. While ping requires bidirectional communication (that's why ping shows the results at the sending machine), iperf3 can generate UDP traffic that can be send unidirectional (that's why we only see the results at the receiver; there is no response to the sender, so the sender never knows if the packets were received).
+
+## To be done...
+- proper, actual uni-direction UDP traffic since unfortunately, iperf opens an actual session. Might has to be coded manually.
